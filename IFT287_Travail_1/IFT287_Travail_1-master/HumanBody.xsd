@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="MainBody">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Systems"/>
+                <xs:element ref="Organs"/>
+            </xs:sequence>
+            <xs:attribute name="bodyID" use="required" type="xs:integer"/>
+            <xs:attribute name="bodyName" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Systems">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="System"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="System">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="Flow"/>
+            </xs:sequence>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="type" use="required" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Flow">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Connectible"/>
+                <xs:element ref="Connections"/>
+            </xs:sequence>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Connectible">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:sequence minOccurs="0">
+                    <xs:element ref="Nose"/>
+                    <xs:element maxOccurs="unbounded" ref="AirConnectible"/>
+                    <xs:element maxOccurs="unbounded" ref="Alveoli"/>
+                </xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Artery"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="SalivaryDuct"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Vein"/>
+                <xs:choice>
+                    <xs:sequence>
+                        <xs:choice maxOccurs="unbounded">
+                            <xs:element ref="DigestiveTract"/>
+                            <xs:element ref="DuodenumTract"/>
+                            <xs:element ref="StomachTract"/>
+                        </xs:choice>
+                        <xs:element ref="RectumTract"/>
+                        <xs:element ref="BiDuct"/>
+                        <xs:choice maxOccurs="unbounded">
+                            <xs:element ref="Duct"/>
+                            <xs:element ref="DuctOverflowableJunction"/>
+                        </xs:choice>
+                        <xs:element ref="DeversingDuct"/>
+                        <xs:element ref="InnerGallbladder"/>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" ref="Atrium"/>
+                        <xs:element maxOccurs="unbounded" ref="Ventricle"/>
+                    </xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="Capillaries"/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Nose">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AirConnectible">
+        <xs:complexType>
+            <xs:attribute name="endRadius" use="required" type="xs:decimal"/>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="length" use="required" type="xs:decimal"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="startRadius" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Alveoli">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="volume" use="required" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Artery">
+        <xs:complexType>
+            <xs:attribute name="endRadius" type="xs:decimal"/>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="length" use="required" type="xs:decimal"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="startRadius" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SalivaryDuct">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="length" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="volume" use="required" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Vein">
+        <xs:complexType>
+            <xs:attribute name="endRadius" type="xs:decimal"/>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="length" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="startRadius" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DigestiveTract">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="length" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="volume" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DuodenumTract">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="length" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="volume" use="required" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="StomachTract">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="length" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="volume" use="required" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RectumTract">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="length" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="volume" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="BiDuct">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Duct">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DuctOverflowableJunction">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeversingDuct">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="InnerGallbladder">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Atrium">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="volume" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Ventricle">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="volume" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Capillaries">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="length" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="volume" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Connections">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Connection"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Connection">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="to"/>
+            </xs:sequence>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="to">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Organs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="Organ"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Organ">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:integer"/>
+            <xs:attribute name="name" use="required"/>
+            <xs:attribute name="systemID" use="required" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
