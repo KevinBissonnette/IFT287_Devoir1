@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/IFT287_Travail_1/CorpsHumainBase/CorpsHumainBase.iml" filepath="$PROJECT_DIR$/IFT287_Travail_1/CorpsHumainBase/CorpsHumainBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/IFT287_Devoir1.iml" filepath="$PROJECT_DIR$/.idea/IFT287_Devoir1.iml" />
+    </modules>
+  </component>
+</project>
