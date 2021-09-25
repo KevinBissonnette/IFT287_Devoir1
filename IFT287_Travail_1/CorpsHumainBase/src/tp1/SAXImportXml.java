@@ -1,8 +1,10 @@
 package tp1;
 
+import org.xml.sax.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -14,14 +16,14 @@ public class SAXImportXml extends DefaultHandler {
 
     private HumanSystem system;
 
-    private List<HumanSystem> list = new ArrayList<>();
+    private List<Corps> list;
 
     private int FlowIndex = 0;
 
     @Override
     public void startDocument() {
        // System.out.println("Start Document");
-
+       list = new ArrayList<Corps>();
     }
 
     @Override
@@ -30,56 +32,55 @@ public class SAXImportXml extends DefaultHandler {
     }
 
     public void startElement(String uri, String localName,
-                             String Organ, Attributes attributes) {
+                             String qName, Attributes attributes) {
 
         // reset the tag value
         currentValue.setLength(0);
 
        // System.out.printf("Start Element : %s%n", Organ);
-        if (Organ.equalsIgnoreCase("System")) {
-            system = new HumanSystem();
-            system.name = attributes.getValue("name");
-            system.id = attributes.getValue("id");
-            system.length = attributes.getValue("length");
-            system.volume = attributes.getValue("volume");
+        if (qName==("MainBody")){
+            list.add(new Corps(attributes));
+            //intiialiser les valeurs dans la calsse System ensuite on va l'ajouter a un Corps
 
         }
+        if (qName==("System")) {
 
-        if (Organ.equalsIgnoreCase("Flow")) {
-            var temp = new Flow();
+            //intiialiser les valeurs dans la classe System ensuite on va l'ajouter a un Corps
+            int valeur=0;
+            list.get(valeur).AjouterSystems(attributes);
+            valeur++;
+        }
+
+
+           /* var temp = new Flow();
 
             temp.name = attributes.getValue("name");
             temp.id = attributes.getValue("id");
             temp.con = new Connectible();
             system.flow.add(temp);
             FlowIndex++;
-        }
-        if (Organ.equalsIgnoreCase("Connectible")) {
+            */
+
+
+        if (qName.equalsIgnoreCase("Connectible")) {
         }
 
-        if ( is(Organ,"Ventricle") || is(Organ,"Atrium")) {
+        if ( is(qName,"Ventricle") || is(qName,"Atrium")) {
             var temp = new Atrium_Ventricule_data();
-            temp.tagName = Organ;
+            temp.tagName = qName;
             temp.id = attributes.getValue("id");
             temp.name = attributes.getValue("name");
             temp.volume = attributes.getValue("volume");
             system.flow.get(FlowIndex-1).con.coeur.add(temp);
         }
 
-        if ( is(Organ,"Vein") || is(Organ,"Artery") || is(Organ,"Capillaries")) {
-            var temp = new Vein_Artery_data();
-            temp.tagName = Organ;
-            temp.name = attributes.getValue("name");
-            temp.id = attributes.getValue("id");
-            temp.startRadius = attributes.getValue("startRadius");
-            temp.endRadius = attributes.getValue("endRadius");
-            temp.length = attributes.getValue("length");
-            system.flow.get(FlowIndex-1).con.circulatoire.add(temp);
+        if ( is(qName,"Vein") || is(qName,"Artery") || is(qName,"Capillaries")) {
+
         }
 
-        if ( is(Organ,"AirConnectible") || is(Organ,"Alveoli") || is(Organ,"Nose") || is(Organ,"Nose") ) {
+        if ( is(qName,"AirConnectible") || is(qName,"Alveoli") || is(qName,"Nose")) {
             var temp = new Tract();
-            temp.tagName = Organ;
+            temp.tagName = qName;
             temp.name = attributes.getValue("name");
             temp.length = attributes.getValue("length");
             temp.volume = attributes.getValue("volume");
@@ -94,20 +95,20 @@ public class SAXImportXml extends DefaultHandler {
 
     }
 
-    public void endElement(String uri, String localName,String Organ) {
+    public void endElement(String uri, String localName,String qName) {
 
        // System.out.printf("End Element : %s%n", Organ);
 
-        if (Organ.equalsIgnoreCase("System")) {
-            list.add(system);
+      /*  if (qName.equalsIgnoreCase("System")) {
+            //list.add(system);
             FlowIndex=0;
 
-        }
+        }*/
     }
 
     public List<HumanSystem> getSystem() {
 
-        return list;
+        return null;
     }
 
     @Override

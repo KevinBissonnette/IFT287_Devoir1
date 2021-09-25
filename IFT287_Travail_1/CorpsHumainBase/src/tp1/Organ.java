@@ -1,5 +1,7 @@
 package tp1;
 
+import java.util.jar.Attributes;
+
 public class Organ {
 
     private String name;
@@ -7,4 +9,8 @@ public class Organ {
     private long id;
 
     private long systemID;
+
+    public Organ(Attributes attributes){
+
+    }
 }

@@ -70,7 +70,7 @@ public class Devoir1 {
                             SAXParser saxParser = factory.newSAXParser();
 
                             SAXImportXml handler = new SAXImportXml();
-                            saxParser.parse(nomFichier, handler);
+                            saxParser.parse(new File(nomFichier), handler);
                             System.out.println(handler.getSystem());
                         } catch (ParserConfigurationException | SAXException | IOException e) {
                             e.printStackTrace();

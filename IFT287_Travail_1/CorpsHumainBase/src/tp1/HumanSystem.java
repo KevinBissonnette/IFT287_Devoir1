@@ -2,6 +2,7 @@ package tp1;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.xml.sax.Attributes;
 
 public class HumanSystem {
 
@@ -9,13 +10,17 @@ public class HumanSystem {
 
     public String id;
 
-    public String length;
+    public String type;
 
-    public String volume;
+    public List<Flow> flow;
 
-    public List<Flow> flow = new ArrayList<>();
+    public HumanSystem(Attributes attributes){
+        flow = new ArrayList<Flow>();
+        this.name = attributes.getValue("name");
+        this.id = attributes.getValue("id");
+        this.type = attributes.getValue("type");
 
-
+    }
 
     public String toString() {
 
@@ -25,6 +30,6 @@ public class HumanSystem {
                 " \"volume\": %s, \n" +
                 " \"length\": %s, \n" +
                 "  \"flow\": %s\n" +
-                "}",name,id,volume,length,flow.toString());
+                "}",name,id,flow.toString());
     }
 }
