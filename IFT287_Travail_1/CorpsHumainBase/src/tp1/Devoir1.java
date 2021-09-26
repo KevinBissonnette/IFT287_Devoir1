@@ -2,7 +2,7 @@ package tp1;
 
 
 import org.w3c.dom.*;
-import org.xml.sax.*;
+import org.xml.sax.helpers.*;
 
 import javax.json.*;
 import javax.json.stream.*;
@@ -69,15 +69,12 @@ public class Devoir1 {
 						SAXParserFactory factory = SAXParserFactory.newInstance();
 						//factory.setValidating(false); // ca marche pas
 
-						try {
 
-							SAXParser saxParser = factory.newSAXParser();
-
-							SAXImportXml handler = new SAXImportXml();
-							saxParser.parse(new File(nomFichier), handler);
-						} catch (ParserConfigurationException | SAXException | IOException e) {
-							e.printStackTrace();
-						}
+						factory.setValidating(true);
+						SAXParser parser = factory.newSAXParser();
+						DefaultHandler handler = new SAXImportXml();
+						parser.parse(new File(nomFichier), handler);
+						corps = ((SAXImportXml) handler).getBody();
 
 
 					} else if (extension.equals(TYPE_JSON)) {
@@ -145,6 +142,7 @@ public class Devoir1 {
 		} catch (
 				Exception e) {
 			System.out.println(" " + e.toString());
+			e.printStackTrace();
 		}
 
 	}

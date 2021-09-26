@@ -78,16 +78,16 @@ public class Connectible extends Identifiable implements Convertable {
 
 
 		if (volume != null) {
-			root.setAttribute(name, volume);
+			root.setAttribute("volume", volume);
 		}
 		if (length != null) {
-			root.setAttribute(name, length);
+			root.setAttribute("length", length);
 		}
 		if (startRadius != null) {
-			root.setAttribute(name, startRadius);
+			root.setAttribute("startRadius", startRadius);
 		}
 		if (endRadius != null) {
-			root.setAttribute(name, endRadius);
+			root.setAttribute("endRadius", endRadius);
 		}
 		element.appendChild(root);
 	}

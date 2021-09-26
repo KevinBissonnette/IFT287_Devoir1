@@ -12,16 +12,29 @@ public abstract class Identifiable {
 
 	protected Identifiable(Attributes attributes) {
 
+		
 		name = attributes.getValue("name");
 		id = attributes.getValue("id");
 
+		if (name == null)
+			name = "";
+		if (id == null)
+			id = "";
 
 	}
 
 	protected Identifiable(JsonObject object) {
 
-		name = object.getString("name");
-		id = object.getString("id");
+
+		if (object.containsKey("name"))
+			name = object.getString("name");
+		if (object.containsKey("id"))
+			id = object.getString("id");
+
+		if (name == null)
+			name = "";
+		if (id == null)
+			id = "";
 	}
 
 }
