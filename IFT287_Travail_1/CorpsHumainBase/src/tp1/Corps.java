@@ -12,11 +12,14 @@ public class Corps {
 	private String bodyName;
 	private String bodyID;
 
-	private List<HumanSystem> humanSystems = new ArrayList<>();
-	private List<Organ> organs = new ArrayList<>();
+	private List<HumanSystem> humanSystems;
+	private List<Organ> organs;
 
 	//Constructeur du corps qui attributs les qName au attributs du corps
 	public Corps(Attributes attributes) {
+		//On doit initialisé sinon lorsqu'on fait l'appel dans devoir1 on a NullPointerException
+		humanSystems= new ArrayList<>();
+		organs= new ArrayList<>();
 		for (var i = 0; i < attributes.getLength(); i++) {
 			if (attributes.getQName(i) == "bodyName")
 				bodyName = attributes.getValue(i);

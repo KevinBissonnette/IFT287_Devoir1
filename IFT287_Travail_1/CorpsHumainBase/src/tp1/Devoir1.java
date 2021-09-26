@@ -72,7 +72,7 @@ public class Devoir1 {
 						SAXParser parser = factory.newSAXParser();
 						DefaultHandler handler = new SAXImportXml();
 						parser.parse(new File(nomFichier), handler);
-						corps = ((SAXImportXml) handler).getBody();
+						corps = ((SAXImportXml)handler).getBody();
 
 
 					} else if (extension.equals(TYPE_JSON)) {
