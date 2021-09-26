@@ -12,7 +12,7 @@ public abstract class Identifiable {
 
 	protected Identifiable(Attributes attributes) {
 
-		
+		type=attributes.getValue("type");
 		name = attributes.getValue("name");
 		id = attributes.getValue("id");
 

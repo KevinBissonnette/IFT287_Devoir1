@@ -9,17 +9,21 @@ import java.util.*;
 
 public class Flow extends Identifiable implements Convertable {
 
-	private List<Connectible> connectibles = new ArrayList<>();
-	private List<Connection> connections = new ArrayList<>();
+	private List<Connectible> connectibles;
+	private List<Connection> connections ;
 
 	public Flow(Attributes attributes) {
 		// this.con=attributes.getValue("con");
 		super(attributes);
+		connectibles = new ArrayList<>();
+		connections = new ArrayList<>();
 	}
 
 	public Flow(JsonObject flows) {
 
 		super(flows);
+		connectibles = new ArrayList<>();
+		connections = new ArrayList<>();
 		for (JsonValue connectible : (JsonArray) flows.get("Connectible"))
 			connectibles.add(new Connectible((JsonObject) connectible));
 
@@ -28,13 +32,12 @@ public class Flow extends Identifiable implements Convertable {
 	}
 
 	//Permet d'ajouter un connectible
-	public void addConnectible(Attributes attributes, String type) {
-		connectibles.add(new Connectible(attributes, type));
+	public void addConnectible(Attributes attributes, String type) { this.connectibles.add(new Connectible(attributes, type));
 	}
 
 	//Permet d'ajouter une connexion
 	public void addConnection(Attributes attributes) {
-		connections.add(new Connection(attributes));
+		this.connections.add(new Connection(attributes));
 	}
 
 	//Permet d'obtenir l'index de la dernière connexion

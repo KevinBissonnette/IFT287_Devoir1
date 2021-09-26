@@ -11,13 +11,15 @@ public class Connection implements Convertable {
 
 	private String id;
 
-	private List<Link> link = new ArrayList<>();
+	private List<Link> link ;
 
 	public Connection(Attributes attributes) {
+		link = new ArrayList<>();
 		id = attributes.getValue("id");
 	}
 
 	public Connection(JsonObject connection) {
+		link = new ArrayList<>();
 		id = connection.getString("id");
 
 		for (JsonValue x : (JsonArray) connection.get("to"))
@@ -25,7 +27,7 @@ public class Connection implements Convertable {
 	}
 
 	public void addLink(Attributes attributes) {
-		link.add(new Link(attributes));
+		this.link.add(new Link(attributes));
 	}
 
 	@Override

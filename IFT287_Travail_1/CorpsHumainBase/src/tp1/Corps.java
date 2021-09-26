@@ -35,7 +35,8 @@ public class Corps {
 		JsonObject corpsJsonObject = corps.getJsonObject("MainBody");
 		bodyName = corpsJsonObject.getString("bodyName");
 		bodyID = corpsJsonObject.getString("bodyID");
-
+		humanSystems= new ArrayList<>();
+		organs= new ArrayList<>();
 		for (var system : (JsonArray) corpsJsonObject.get("Systems"))
 			humanSystems.add(new HumanSystem((JsonObject) system));
 		for (var organ : (JsonArray) corpsJsonObject.get("Organs"))
@@ -79,6 +80,7 @@ public class Corps {
 	}
 
 	public void convertXML(Document document) {
+
 		Element mainBody = document.createElement("MainBody");
 		mainBody.setAttribute("bodyName", bodyName);
 		mainBody.setAttribute("bodyID", bodyID);

@@ -10,13 +10,14 @@ import java.util.*;
 
 public class HumanSystem extends Identifiable implements Convertable {
 
-	private List<Flow> flows = new ArrayList<>();
+	private List<Flow> flows;
 
 	//Constructeur qui donne les attributs au système humain
 	public HumanSystem(Attributes attributes) {
 	// TODO
 	// Changer pour if else if
 		super(attributes);
+		flows= new ArrayList<>();
 		this.type = attributes.getValue("type");
 	}
 
@@ -24,7 +25,7 @@ public class HumanSystem extends Identifiable implements Convertable {
 	public HumanSystem(JsonObject jsonObject) {
 		super(jsonObject);
 		type = jsonObject.getString("type");
-
+		flows= new ArrayList<>();
 		//TODO
 		// changer pour for si marche pas
 		var array = ((JsonArray) jsonObject.get("Flow")).iterator();
