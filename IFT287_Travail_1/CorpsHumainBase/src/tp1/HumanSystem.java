@@ -1,35 +1,71 @@
 package tp1;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.xml.sax.Attributes;
+import org.w3c.dom.*;
+import org.xml.sax.*;
 
-public class HumanSystem {
+import javax.json.*;
+import javax.json.stream.*;
+import java.util.*;
 
-    public String name;
 
-    public String id;
+public class HumanSystem extends Identifiable implements Convertable {
 
-    public String type;
+	private List<Flow> flows = new ArrayList<>();
 
-    public List<Flow> flow;
+	public HumanSystem(Attributes attributes) {
+// TODO
+// Changer pour if else if
+		super(attributes);
+		this.type = attributes.getValue("type");
+	}
 
-    public HumanSystem(Attributes attributes){
-        flow = new ArrayList<Flow>();
-        this.name = attributes.getValue("name");
-        this.id = attributes.getValue("id");
-        this.type = attributes.getValue("type");
 
-    }
+	public HumanSystem(JsonObject jsonObject) {
+		super(jsonObject);
+		type = jsonObject.getString("type");
 
-    public String toString() {
+		//TODO
+		// changer pour for si marche pas
+		var array = ((JsonArray) jsonObject.get("Flow")).iterator();
+		while (array.hasNext()) {
+			this.flows.add(new Flow((JsonObject) array.next()));
+		}
+	}
 
-        return String.format("{\n" +
-                "  \"name\": %s, \n" +
-                "  \"id\": %s,\n" +
-                " \"volume\": %s, \n" +
-                " \"length\": %s, \n" +
-                "  \"flow\": %s\n" +
-                "}",name,id,flow.toString());
-    }
+	public void addFlow(Attributes attrs) {
+		this.flows.add(new Flow(attrs));
+	}
+
+	public Flow last() {
+		return this.flows.get(this.flows.size() - 1);
+	}
+
+	@Override
+	public void convertJson(JsonGenerator jsonGenerator) {
+		jsonGenerator.writeStartObject()
+				.write("name", name)
+				.write("id", id)
+				.write("type", type);
+
+		jsonGenerator.writeStartArray("Flow");
+		for (var i = 0; i < flows.size(); i++)
+			flows.get(i).convertJson(jsonGenerator);
+		jsonGenerator.writeEnd();
+
+		jsonGenerator.writeEnd();
+	}
+
+	@Override
+	public void convertXML(Document document, Element element) {
+
+		Element root = document.createElement("System");
+
+		root.setAttribute("name", name);
+		root.setAttribute("id", id);
+		root.setAttribute("type", type);
+
+		for (var i = 0; i < flows.size(); i++)
+			flows.get(i).convertXML(document, root);
+		element.appendChild(root);
+	}
 }

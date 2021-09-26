@@ -1,30 +1,88 @@
 package tp1;
 
-import java.util.ArrayList;
-import org.xml.sax.Attributes;
+import org.w3c.dom.*;
+import org.xml.sax.*;
+
+import javax.json.*;
+import javax.json.stream.*;
+import java.util.*;
 
 public class Corps {
 
+	private String bodyName;
+	private String bodyID;
 
-    //Notre corps possède nom et un id
-    private String bodyName;
-    private String bodyId;
+	private List<HumanSystem> humanSystems = new ArrayList<>();
+	private List<Organ> organs = new ArrayList<>();
 
-    //Notre corps possède un HumanSystem et des Organs
-    public ArrayList<HumanSystem> systems;
-    private ArrayList<Organ> organs;
+	public Corps(Attributes attributes) {
+		for (var i = 0; i < attributes.getLength(); i++) {
+			if (attributes.getQName(i) == "bodyName")
+				bodyName = attributes.getValue(i);
+			else
+				bodyID = attributes.getValue(i);
+		}
+	}
 
-    //On initialise les attributs du corps et la liste d'organes et la liste de systèmes
-    public Corps(Attributes attributes){
+	public Corps(JsonObject corps) {
+		JsonObject corpsJsonObject = corps.getJsonObject("MainBody");
+		bodyName = corpsJsonObject.getString("bodyName");
+		bodyID = corpsJsonObject.getString("bodyID");
 
-        systems=new ArrayList<HumanSystem>();
-        organs=new ArrayList<Organ>();
-        this.bodyName=attributes.getValue("bodyName");
-        this.bodyId=attributes.getValue("bodyID");
-    }
+		for (var system : (JsonArray) corpsJsonObject.get("Systems"))
+			humanSystems.add(new HumanSystem((JsonObject) system));
+		for (var organ : (JsonArray) corpsJsonObject.get("Organs"))
+			organs.add(new Organ((JsonObject) organ));
+	}
 
-    public void AjouterSystems(Attributes attrributes){
-        systems.add(new HumanSystem(attrributes));
-    }
+	public void addSystem(Attributes attributes) {
+		humanSystems.add(new HumanSystem(attributes));
+	}
+
+	public void addOrgan(Attributes attributes) {
+		organs.add(new Organ(attributes));
+	}
+
+	public HumanSystem getLastSystem() {
+		return humanSystems.get(humanSystems.size() - 1);
+	}
+
+	public void convertJson(JsonGenerator jsonGenerator) {
+		jsonGenerator.writeStartObject();
+		jsonGenerator.writeStartObject("MainBody")
+				.write("bodyName", bodyName)
+				.write("bodyID", bodyID);
+
+		jsonGenerator.writeStartArray("Systems");
+		for (var i = 0; i < humanSystems.size(); i++)
+			humanSystems.get(i).convertJson(jsonGenerator);
+
+		jsonGenerator.writeEnd();
+
+		jsonGenerator.writeStartArray("Organs");
+		for (var i = 0; i < organs.size(); i++)
+			organs.get(i).convertJson(jsonGenerator);
+
+		jsonGenerator.writeEnd()
+				.writeEnd()
+				.writeEnd();
+	}
+
+	public void convertXML(Document document) {
+		Element mainBody = document.createElement("MainBody");
+		mainBody.setAttribute("bodyName", bodyName);
+		mainBody.setAttribute("bodyID", bodyID);
+		document.appendChild(mainBody);
+
+		Element xmlSystems = document.createElement("Systems");
+		for (var i = 0; i < humanSystems.size(); i++)
+			humanSystems.get(i).convertXML(document, xmlSystems);
+		mainBody.appendChild(xmlSystems);
+
+		Element xmlOrgans = document.createElement("Organs");
+		for (var i = 0; i < organs.size(); i++)
+			organs.get(i).convertXML(document, xmlOrgans);
+		mainBody.appendChild(xmlOrgans);
+	}
 
 }

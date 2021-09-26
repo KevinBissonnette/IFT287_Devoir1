@@ -1,34 +1,94 @@
 package tp1;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.w3c.dom.*;
+import org.xml.sax.*;
 
-public class Connectible {
+import javax.json.*;
+import javax.json.stream.*;
 
-    public List<Vein_Artery_data> circulatoire= new ArrayList<>();
-    public List<Atrium_Ventricule_data> coeur = new ArrayList<>();
-    public List<Tract> pipe = new ArrayList<>();
-    public List<Duct> ventre = new ArrayList<>();
+public class Connectible extends Identifiable implements Convertable {
 
-    public HumanSystem salivaryDuct;
-    public Organ organ;
 
-    public String toString() {
+	private String volume;
+	private String length;
+	private String startRadius;
+	private String endRadius;
 
-        List list = null;
+	public Connectible(Attributes attributes, String type) {
+		super(attributes);
+		this.type = type;
+		this.volume = attributes.getValue("volume");
+		this.length = attributes.getValue("length");
+		this.startRadius = attributes.getValue("startRadius");
+		this.endRadius = attributes.getValue("endRadius");
+	}
 
-        if( circulatoire.size()>0)
-            list = circulatoire;
-        else if(coeur.size()>0)
-            list = coeur;
-        else if(pipe.size()>0)
-            list = pipe;
-        else if(ventre.size()>0)
-            list = ventre;
-        if(list != null)
-            return list.toString();
+	public Connectible(JsonObject connectible) {
 
-        return null;
-    }
+		super(connectible);
 
+		if (connectible.containsKey("type")) {
+			type = connectible.getString("type");
+		}
+
+		if (connectible.containsKey("volume")) {
+			volume = connectible.getString("volume");
+		}
+		if (connectible.containsKey("length")) {
+			length = connectible.getString("length");
+		}
+		if (connectible.containsKey("startRadius")) {
+			startRadius = connectible.getString("startRadius");
+		}
+		if (connectible.containsKey("endRadius")) {
+			endRadius = connectible.getString("endRadius");
+
+		}
+	}
+
+
+	@Override
+	public void convertJson(JsonGenerator jsonGenerator) {
+		jsonGenerator.writeStartObject()
+				.write("type", type)
+				.write("name", name)
+				.write("id", id);
+		if (volume != null) {
+			jsonGenerator.write(name, volume);
+		}
+		if (length != null) {
+			jsonGenerator.write(name, length);
+		}
+		if (startRadius != null) {
+			jsonGenerator.write(name, startRadius);
+		}
+		if (endRadius != null) {
+			jsonGenerator.write(name, endRadius);
+		}
+		jsonGenerator.writeEnd();
+	}
+
+	@Override
+	public void convertXML(Document document, Element element) {
+
+		Element root = document.createElement(type);
+
+		root.setAttribute("name", name);
+		root.setAttribute("id", id);
+
+
+		if (volume != null) {
+			root.setAttribute(name, volume);
+		}
+		if (length != null) {
+			root.setAttribute(name, length);
+		}
+		if (startRadius != null) {
+			root.setAttribute(name, startRadius);
+		}
+		if (endRadius != null) {
+			root.setAttribute(name, endRadius);
+		}
+		element.appendChild(root);
+	}
 }

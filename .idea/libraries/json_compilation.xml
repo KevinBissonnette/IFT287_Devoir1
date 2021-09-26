@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="json-compilation">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/IFT287_Travail_1/CorpsHumainBase/json-compilation.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

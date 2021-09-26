@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="json-execution">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/IFT287_Travail_1/CorpsHumainBase/json-execution.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="jar://$PROJECT_DIR$/IFT287_Travail_1/CorpsHumainBase/json-execution.jar!/" recursive="false" />
+  </library>
+</component>

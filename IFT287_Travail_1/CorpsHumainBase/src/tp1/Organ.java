@@ -1,16 +1,59 @@
 package tp1;
 
-import java.util.jar.Attributes;
+import org.w3c.dom.*;
+import org.xml.sax.Attributes;
 
-public class Organ {
+import javax.json.*;
+import javax.json.stream.*;
 
-    private String name;
+public class Organ extends Identifiable implements Convertable {
 
-    private long id;
+	private String systemID;
 
-    private long systemID;
+	public Organ(Attributes attributes) {
+		super(attributes);
+		for (var i = 0; i < attributes.getLength(); i++) {
+			var att = attributes.getQName(i);
+			var value = attributes.getValue(i);
+			if (att.equalsIgnoreCase("name"))
+				name = value;
 
-    public Organ(Attributes attributes){
+			else if (att.equalsIgnoreCase("id"))
+				id = value;
 
-    }
+			else if (att.equalsIgnoreCase("systemID"))
+				systemID = value;
+		}
+	}
+
+	public Organ(JsonObject organ) {
+		super(organ);
+		name = organ.getString("name");
+		id = organ.getString("id");
+		systemID = organ.getString("systemID");
+	}
+
+	public void convertJson(JsonGenerator jsonGenerator) {
+		jsonGenerator.writeStartObject()
+				.write("name", name)
+				.write("id", id)
+				.write("systemID", systemID)
+				.writeEnd();
+	}
+
+	public void convertXML(Document document, Element parent) {
+		Element Organ = document.createElement("Organ");
+
+		Organ.setAttribute("name", name);
+		Organ.setAttribute("id", id);
+		Organ.setAttribute("systemID", systemID);
+
+		parent.appendChild(Organ);
+	}
+
 }
+
+
+
+
+

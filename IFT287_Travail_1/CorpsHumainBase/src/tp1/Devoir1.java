@@ -1,161 +1,194 @@
 package tp1;
 
 
-import java.io.*;
-import java.util.StringTokenizer;
+import org.w3c.dom.*;
+import org.xml.sax.*;
+
+import javax.json.*;
+import javax.json.stream.*;
 import javax.xml.parsers.*;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.IOException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+import java.io.*;
+import java.util.*;
 
 public class Devoir1 {
 
-    private static final String CMD_IMPORTER = "importer";
-    private static final String CMD_EXPORTER = "exporter";
-    private static final String CMD_QUITTER = "quitter";
-    private static final String TYPE_XML = "xml";
-    private static final String TYPE_JSON = "json";
+	private static final String CMD_IMPORTER = "importer";
+	private static final String CMD_EXPORTER = "exporter";
+	private static final String CMD_QUITTER = "quitter";
+	private static final String TYPE_XML = "xml";
+	private static final String TYPE_JSON = "json";
 
-    public static void main(String[] args) {
-        try {
-            // Il est possible que vous ayez à déplacer la connexion ailleurs.
-            // N'hésitez pas à le faire!
-            BufferedReader reader = ouvrirFichier(args);
-            String transaction = lireTransaction(reader);
-            while (!finTransaction(transaction)) {
-                executerTransaction(transaction);
-                transaction = lireTransaction(reader);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	private static Corps corps;
+	private static Corps jsonCorps;
 
-    }
+	public static void main(String[] args) {
+		try {
+			// Il est possible que vous ayez à déplacer la connexion ailleurs.
+			// N'hésitez pas à le faire!
+			BufferedReader reader = ouvrirFichier(args);
+			String transaction = lireTransaction(reader);
+			while (!finTransaction(transaction)) {
+				executerTransaction(transaction);
+				transaction = lireTransaction(reader);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-    private static String getExtensionFichier(String nomFichier) {
-        if (nomFichier.lastIndexOf(".") != -1 && nomFichier.lastIndexOf(".") != 0)
-            return nomFichier.substring(nomFichier.lastIndexOf(".") + 1);
-        else return "";
-    }
+	}
 
-    /**
-     * Decodage et traitement d'une transaction
-     */
-    static void executerTransaction(String transaction) throws Exception, IFT287Exception {
-        try {
-            System.out.print(transaction + " ");
-            // Decoupage de la transaction en mots
-            StringTokenizer tokenizer = new StringTokenizer(transaction, " ");
-            if (tokenizer.hasMoreTokens()) {
-                String mode = tokenizer.nextToken();
-                String nomFichier = readString(tokenizer);
-                String extension = getExtensionFichier(nomFichier);
+	private static String getExtensionFichier(String nomFichier) {
+		if (nomFichier.lastIndexOf(".") != -1 && nomFichier.lastIndexOf(".") != 0)
+			return nomFichier.substring(nomFichier.lastIndexOf(".") + 1);
+		else return "";
+	}
 
-                if (mode.equals(CMD_IMPORTER)) {
-                    if (extension.equals(TYPE_XML)) {
-                        System.out.println("Debut de l'importation du fichier XML " + nomFichier);
+	/**
+	 * Decodage et traitement d'une transaction
+	 */
+	static void executerTransaction(String transaction) throws Exception, IFT287Exception {
+		try {
+			System.out.print(transaction + " ");
+			// Decoupage de la transaction en mots
+			StringTokenizer tokenizer = new StringTokenizer(transaction, " ");
+			if (tokenizer.hasMoreTokens()) {
+				String mode = tokenizer.nextToken();
+				String nomFichier = readString(tokenizer);
+				String extension = getExtensionFichier(nomFichier);
 
-                        //***************
-                        // CODE PARTIE 2
-                        //****************
-                        SAXParserFactory factory = SAXParserFactory.newInstance();
-                        //factory.setValidating(false); // ca marche pas
+				if (mode.equals(CMD_IMPORTER)) {
+					if (extension.equals(TYPE_XML)) {
+						System.out.println("Debut de l'importation du fichier XML " + nomFichier);
 
-                        try {
+						//***************
+						// CODE PARTIE 2
+						//****************
+						SAXParserFactory factory = SAXParserFactory.newInstance();
+						//factory.setValidating(false); // ca marche pas
 
-                            SAXParser saxParser = factory.newSAXParser();
+						try {
 
-                            SAXImportXml handler = new SAXImportXml();
-                            saxParser.parse(new File(nomFichier), handler);
-                            System.out.println(handler.getSystem());
-                        } catch (ParserConfigurationException | SAXException | IOException e) {
-                            e.printStackTrace();
-                        }
+							SAXParser saxParser = factory.newSAXParser();
 
-
-
-
-                } else if (extension.equals(TYPE_JSON)) {
-                    System.out.println("Debut de l'importation du fichier JSON " + nomFichier);
-                    //Votre code d'importation JSON ici (Partie 4)
+							SAXImportXml handler = new SAXImportXml();
+							saxParser.parse(new File(nomFichier), handler);
+						} catch (ParserConfigurationException | SAXException | IOException e) {
+							e.printStackTrace();
+						}
 
 
-                } else {
-                    System.out.println("Le système ne supporte actuellement pas l'importation des fichiers au format " + extension);
-                }
-            } else if (mode.equals(CMD_EXPORTER)) {
-                if (extension.equals(TYPE_XML)) {
-                    System.out.println("Debut de l'exportation vers le fichier XML " + nomFichier);
-                    // Votre code d'exportation XML ici (Partie 4)
+					} else if (extension.equals(TYPE_JSON)) {
+						System.out.println("Debut de l'importation du fichier JSON " + nomFichier);
+						//Votre code d'importation JSON ici (Partie 4)
+
+						JsonReader reader = Json.createReader(new FileReader(nomFichier));
+						JsonStructure jsonStruct = reader.read();
+						JsonObject corps = (JsonObject) jsonStruct;
+						jsonCorps = new Corps(corps);
+
+					} else {
+						System.out.println("Le système ne supporte actuellement pas l'importation des fichiers au format " + extension);
+					}
+				} else if (mode.equals(CMD_EXPORTER)) {
+					if (extension.equals(TYPE_XML)) {
+						System.out.println("Debut de l'exportation vers le fichier XML " + nomFichier);
+						// Votre code d'exportation XML ici (Partie 4)
+
+						DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+						try {
+							DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+							Document document = documentBuilder.newDocument();
+							corps.convertXML(document);
+
+							// source
+							// https://examples.javacodegeeks.com/core-java/xml/parsers/documentbuilderfactory/create-xml-file-in-java-using-dom-parser-example/
+							TransformerFactory transformerFactory = TransformerFactory.newInstance();
+							Transformer transformer = transformerFactory.newTransformer();
+							transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+							DOMSource domSource = new DOMSource(document);
+							StreamResult streamResult = new StreamResult(new File(nomFichier));
+
+							transformer.transform(domSource, streamResult);
+
+						} catch (ParserConfigurationException e) {
+
+						}
 
 
-                } else if (extension.equals(TYPE_JSON)) {
-                    System.out.println("Debut de l'exportation vers le fichier JSON " + nomFichier);
-                    //Votre code d'exportation JSON ici (Partie 3)
+					} else if (extension.equals(TYPE_JSON)) {
+						System.out.println("Debut de l'exportation vers le fichier JSON " + nomFichier);
+						//Votre code d'exportation JSON ici (Partie 3)
+
+						Map<String, Object> map = new HashMap<String, Object>(1);
+						// pour les tabs et espaces
+						map.put(JsonGenerator.PRETTY_PRINTING, true);
+						StringWriter w = new StringWriter();
+						JsonGeneratorFactory f = Json.createGeneratorFactory(map);
+						JsonGenerator jsonGenerator = f.createGenerator(w);
+
+						FileWriter writer = new FileWriter(nomFichier);
+						JsonGenerator generator = Json.createGenerator(writer);
+						corps.convertJson(generator);
+						generator.close();
 
 
-                } else {
-                    System.out.println("Le système ne supporte actuellement pas l'exportation vers les fichiers au format " + extension);
-                }
-            } else {
-                System.out.println("Commande inconnue, choisir entre 'importer' ou 'exporter'");
-            }
-        }
-    }
-        catch(
-    Exception e)
+					} else {
+						System.out.println("Le système ne supporte actuellement pas l'exportation vers les fichiers au format " + extension);
+					}
+				} else {
+					System.out.println("Commande inconnue, choisir entre 'importer' ou 'exporter'");
+				}
+			}
+		} catch (
+				Exception e) {
+			System.out.println(" " + e.toString());
+		}
 
-    {
-        System.out.println(" " + e.toString());
-    }
-
-}
+	}
 
 
-    // ****************************************************************
-    // *   Les methodes suivantes n'ont pas besoin d'etre modifiees   *
-    // ****************************************************************
+	// ****************************************************************
+	// *   Les methodes suivantes n'ont pas besoin d'etre modifiees   *
+	// ****************************************************************
 
-    /**
-     * Ouvre le fichier de transaction, ou lit à partir de System.in
-     */
-    public static BufferedReader ouvrirFichier(String[] args) throws FileNotFoundException {
-        if (args.length < 1)
-            // Lecture au clavier
-            return new BufferedReader(new InputStreamReader(System.in));
-        else
-            // Lecture dans le fichier passe en parametre
-            return new BufferedReader(new InputStreamReader(new FileInputStream(args[0])));
-    }
+	/**
+	 * Ouvre le fichier de transaction, ou lit à partir de System.in
+	 */
+	public static BufferedReader ouvrirFichier(String[] args) throws FileNotFoundException {
+		if (args.length < 1)
+			// Lecture au clavier
+			return new BufferedReader(new InputStreamReader(System.in));
+		else
+			// Lecture dans le fichier passe en parametre
+			return new BufferedReader(new InputStreamReader(new FileInputStream(args[0])));
+	}
 
-    /**
-     * Lecture d'une transaction
-     */
-    static String lireTransaction(BufferedReader reader) throws IOException
-    {
-        return reader.readLine();
-    }
+	/**
+	 * Lecture d'une transaction
+	 */
+	static String lireTransaction(BufferedReader reader) throws IOException {
+		return reader.readLine();
+	}
 
-    /**
-     * Verifie si la fin du traitement des transactions est atteinte.
-     */
-    static boolean finTransaction(String transaction)
-    {
-        // fin de fichier atteinte
-        return (transaction == null || transaction.equals(CMD_QUITTER));
-    }
+	/**
+	 * Verifie si la fin du traitement des transactions est atteinte.
+	 */
+	static boolean finTransaction(String transaction) {
+		// fin de fichier atteinte
+		return (transaction == null || transaction.equals(CMD_QUITTER));
+	}
 
-    /** Lecture d'une chaine de caracteres de la transaction entree a l'ecran */
-    static String readString(StringTokenizer tokenizer) throws Exception
-    {
-        if (tokenizer.hasMoreElements())
-            return tokenizer.nextToken();
-        else
-            throw new Exception("Autre parametre attendu");
-    }
+	/**
+	 * Lecture d'une chaine de caracteres de la transaction entree a l'ecran
+	 */
+	static String readString(StringTokenizer tokenizer) throws Exception {
+		if (tokenizer.hasMoreElements())
+			return tokenizer.nextToken();
+		else
+			throw new Exception("Autre parametre attendu");
+	}
 
 }
