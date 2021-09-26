@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- <!DOCTYPE MainBody [ -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- <!DOCTYPE MainBody [-->
         <!ELEMENT MainBody (Systems|Organs)*>
         <!ATTLIST MainBody
                 bodyName CDATA #REQUIRED
@@ -39,7 +39,7 @@
                 name CDATA #REQUIRED
                 startRadius CDATA #REQUIRED
                 endRadius CDATA #IMPLIED> <!-- Pas oblige partout -->
-<!ELEMENT Vein (#PCDATA)>
+        <!ELEMENT Vein (#PCDATA)>
         <!ATTLIST Vein
                 endRadius CDATA #IMPLIED
                 id CDATA #REQUIRED

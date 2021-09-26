@@ -12,14 +12,15 @@ public class HumanSystem extends Identifiable implements Convertable {
 
 	private List<Flow> flows = new ArrayList<>();
 
+	//Constructeur qui donne les attributs au système humain
 	public HumanSystem(Attributes attributes) {
-// TODO
-// Changer pour if else if
+	// TODO
+	// Changer pour if else if
 		super(attributes);
 		this.type = attributes.getValue("type");
 	}
 
-
+	//Constructeur avec un jsonObject boboff qui donne les attributs au système humain
 	public HumanSystem(JsonObject jsonObject) {
 		super(jsonObject);
 		type = jsonObject.getString("type");
@@ -31,15 +32,17 @@ public class HumanSystem extends Identifiable implements Convertable {
 			this.flows.add(new Flow((JsonObject) array.next()));
 		}
 	}
-
+    //Ajout d'un flow a un system
 	public void addFlow(Attributes attrs) {
 		this.flows.add(new Flow(attrs));
 	}
 
+	//Obtient la valeur du dernier index du flow
 	public Flow last() {
 		return this.flows.get(this.flows.size() - 1);
 	}
 
+	//Override la fonction de convertable pour la convertir avec le json generator
 	@Override
 	public void convertJson(JsonGenerator jsonGenerator) {
 		jsonGenerator.writeStartObject()
@@ -55,6 +58,7 @@ public class HumanSystem extends Identifiable implements Convertable {
 		jsonGenerator.writeEnd();
 	}
 
+	//Override la fonction de convertable pour la convertir en xml
 	@Override
 	public void convertXML(Document document, Element element) {
 

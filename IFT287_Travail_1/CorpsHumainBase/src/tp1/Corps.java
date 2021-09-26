@@ -15,6 +15,7 @@ public class Corps {
 	private List<HumanSystem> humanSystems = new ArrayList<>();
 	private List<Organ> organs = new ArrayList<>();
 
+	//Constructeur du corps qui attributs les qName au attributs du corps
 	public Corps(Attributes attributes) {
 		for (var i = 0; i < attributes.getLength(); i++) {
 			if (attributes.getQName(i) == "bodyName")
@@ -22,8 +23,11 @@ public class Corps {
 			else
 				bodyID = attributes.getValue(i);
 		}
-	}
 
+	//	this.bodyName=attributes.getValue("bodyName");
+		//this.bodyID=attributes.getValue("bodyID");
+	}
+	//Constructeur du corps json qui attributs les qName au attributs du corps
 	public Corps(JsonObject corps) {
 		JsonObject corpsJsonObject = corps.getJsonObject("MainBody");
 		bodyName = corpsJsonObject.getString("bodyName");
@@ -35,14 +39,17 @@ public class Corps {
 			organs.add(new Organ((JsonObject) organ));
 	}
 
+	//Ajoute un systemes à un systeme
 	public void addSystem(Attributes attributes) {
 		humanSystems.add(new HumanSystem(attributes));
 	}
 
+	//Ajoute un organs à un organ
 	public void addOrgan(Attributes attributes) {
 		organs.add(new Organ(attributes));
 	}
 
+	//Obtient le dernier system des systèmes
 	public HumanSystem getLastSystem() {
 		return humanSystems.get(humanSystems.size() - 1);
 	}

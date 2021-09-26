@@ -20,25 +20,29 @@ public class Flow extends Identifiable implements Convertable {
 	public Flow(JsonObject flows) {
 
 		super(flows);
-		for (JsonValue ctibles : (JsonArray) flows.get("Connectible"))
-			connectibles.add(new Connectible((JsonObject) ctibles));
+		for (JsonValue connectible : (JsonArray) flows.get("Connectible"))
+			connectibles.add(new Connectible((JsonObject) connectible));
 
-		for (JsonValue ction : (JsonArray) flows.get("Connections"))
-			connections.add(new Connection((JsonObject) ction));
+		for (JsonValue connection : (JsonArray) flows.get("Connections"))
+			connections.add(new Connection((JsonObject) connection));
 	}
 
+	//Permet d'ajouter un connectible
 	public void addConnectible(Attributes attributes, String type) {
 		connectibles.add(new Connectible(attributes, type));
 	}
 
+	//Permet d'ajouter une connexion
 	public void addConnection(Attributes attributes) {
 		connections.add(new Connection(attributes));
 	}
 
+	//Permet d'obtenir l'index de la dernière connexion
 	public Connection getConnection() {
 		return connections.get(connections.size() - 1);
 	}
 
+	//Override la fonction de convertable pour la convertir avec le json generator
 	@Override
 	public void convertJson(JsonGenerator jsonGenerator) {
 
@@ -52,14 +56,14 @@ public class Flow extends Identifiable implements Convertable {
 		jsonGenerator.writeEnd();
 
 		jsonGenerator.writeStartArray("Connections");
-		for (Convertable c : connections)
+		for (Connection c : connections)
 			c.convertJson(jsonGenerator);
 		jsonGenerator.writeEnd();
 
 		jsonGenerator.writeEnd();
-		//return gen.writeEnd();
-	}
 
+	}
+	//Override la fonction de convertable pour la convertion en xml
 	@Override
 	public void convertXML(Document document, Element element) {
 

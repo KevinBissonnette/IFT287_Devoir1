@@ -30,40 +30,40 @@ public class Connectible extends Identifiable implements Convertable {
 		if (connectible.containsKey("type")) {
 			type = connectible.getString("type");
 		}
-
-		if (connectible.containsKey("volume")) {
+		else if (connectible.containsKey("volume")) {
 			volume = connectible.getString("volume");
 		}
-		if (connectible.containsKey("length")) {
+		else if (connectible.containsKey("length")) {
 			length = connectible.getString("length");
 		}
-		if (connectible.containsKey("startRadius")) {
+		else if (connectible.containsKey("startRadius")) {
 			startRadius = connectible.getString("startRadius");
 		}
-		if (connectible.containsKey("endRadius")) {
+		else if (connectible.containsKey("endRadius")) {
 			endRadius = connectible.getString("endRadius");
-
 		}
 	}
 
 
 	@Override
 	public void convertJson(JsonGenerator jsonGenerator) {
+
+		//code inspiré des notes de cours Représentation des données Framework diapo 37
 		jsonGenerator.writeStartObject()
 				.write("type", type)
 				.write("name", name)
 				.write("id", id);
 		if (volume != null) {
-			jsonGenerator.write(name, volume);
+			jsonGenerator.write("volume", volume);
 		}
 		if (length != null) {
-			jsonGenerator.write(name, length);
+			jsonGenerator.write("length", length);
 		}
 		if (startRadius != null) {
-			jsonGenerator.write(name, startRadius);
+			jsonGenerator.write("startRadius", startRadius);
 		}
 		if (endRadius != null) {
-			jsonGenerator.write(name, endRadius);
+			jsonGenerator.write("endRadius", endRadius);
 		}
 		jsonGenerator.writeEnd();
 	}

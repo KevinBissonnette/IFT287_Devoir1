@@ -10,7 +10,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../json-compilation.jar!/" />
+          <root url="jar://$MODULE_DIR$/json-compilation.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,7 +19,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../json-execution.jar!/" />
+          <root url="jar://$MODULE_DIR$/json-execution.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

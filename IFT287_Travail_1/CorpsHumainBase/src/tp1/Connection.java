@@ -20,8 +20,8 @@ public class Connection implements Convertable {
 	public Connection(JsonObject connection) {
 		id = connection.getString("id");
 
-		for (JsonValue l : (JsonArray) connection.get("to"))
-			link.add(new Link((JsonObject) l));
+		for (JsonValue x : (JsonArray) connection.get("to"))
+			link.add(new Link((JsonObject) x));
 	}
 
 	public void addLink(Attributes attributes) {

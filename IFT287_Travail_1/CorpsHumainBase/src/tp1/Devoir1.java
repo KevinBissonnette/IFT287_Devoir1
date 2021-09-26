@@ -66,10 +66,8 @@ public class Devoir1 {
 						//***************
 						// CODE PARTIE 2
 						//****************
+						//La partie importation de xml a orienté objet est basé sur les diapos 8 du ppw sur la Représentation des données - Framework
 						SAXParserFactory factory = SAXParserFactory.newInstance();
-						//factory.setValidating(false); // ca marche pas
-
-
 						factory.setValidating(true);
 						SAXParser parser = factory.newSAXParser();
 						DefaultHandler handler = new SAXImportXml();
@@ -81,6 +79,7 @@ public class Devoir1 {
 						System.out.println("Debut de l'importation du fichier JSON " + nomFichier);
 						//Votre code d'importation JSON ici (Partie 4)
 
+						//La partie importation d'un fichier JSON est basé sur la diapositive 39 du ppw sur la Représentation des données - Framework
 						JsonReader reader = Json.createReader(new FileReader(nomFichier));
 						JsonStructure jsonStruct = reader.read();
 						JsonObject corps = (JsonObject) jsonStruct;
@@ -94,14 +93,15 @@ public class Devoir1 {
 						System.out.println("Debut de l'exportation vers le fichier XML " + nomFichier);
 						// Votre code d'exportation XML ici (Partie 4)
 
+						//La partie exportation vers le fichier xml est basé sur la diapositive 28 du ppw sur la Représentation des données - Framework
+
 						DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 						try {
 							DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 							Document document = documentBuilder.newDocument();
 							corps.convertXML(document);
 
-							// source
-							// https://examples.javacodegeeks.com/core-java/xml/parsers/documentbuilderfactory/create-xml-file-in-java-using-dom-parser-example/
+							// La source de ce code provient du site https://examples.javacodegeeks.com/core-java/xml/parsers/documentbuilderfactory/create-xml-file-in-java-using-dom-parser-example/
 							TransformerFactory transformerFactory = TransformerFactory.newInstance();
 							Transformer transformer = transformerFactory.newTransformer();
 							transformer.setOutputProperty(OutputKeys.INDENT, "yes");
