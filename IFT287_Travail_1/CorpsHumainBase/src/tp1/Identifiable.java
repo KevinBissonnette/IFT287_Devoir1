@@ -3,6 +3,7 @@ package tp1;
 import org.xml.sax.*;
 
 import javax.json.*;
+import javax.xml.namespace.QName;
 
 public abstract class Identifiable {
 
@@ -16,10 +17,13 @@ public abstract class Identifiable {
 		name = attributes.getValue("name");
 		id = attributes.getValue("id");
 
-		if (name == null)
-			name = "";
-		if (id == null)
-			id = "";
+
+		if(name==null){
+			 name="";
+		}
+		if(id==null) {
+			id= "";
+		}
 
 	}
 

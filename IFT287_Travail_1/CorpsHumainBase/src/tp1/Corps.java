@@ -20,15 +20,9 @@ public class Corps {
 		//On doit initialisé sinon lorsqu'on fait l'appel dans devoir1 on a NullPointerException
 		humanSystems= new ArrayList<>();
 		organs= new ArrayList<>();
-		for (var i = 0; i < attributes.getLength(); i++) {
-			if (attributes.getQName(i) == "bodyName")
-				bodyName = attributes.getValue(i);
-			else
-				bodyID = attributes.getValue(i);
-		}
 
-	//	this.bodyName=attributes.getValue("bodyName");
-		//this.bodyID=attributes.getValue("bodyID");
+		this.bodyName=attributes.getValue("bodyName");
+		this.bodyID=attributes.getValue("bodyID");
 	}
 	//Constructeur du corps json qui attributs les qName au attributs du corps
 	public Corps(JsonObject corps) {

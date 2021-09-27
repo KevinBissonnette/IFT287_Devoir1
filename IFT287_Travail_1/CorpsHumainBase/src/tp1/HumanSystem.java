@@ -14,8 +14,7 @@ public class HumanSystem extends Identifiable implements Convertable {
 
 	//Constructeur qui donne les attributs au système humain
 	public HumanSystem(Attributes attributes) {
-	// TODO
-	// Changer pour if else if
+
 		super(attributes);
 		flows= new ArrayList<>();
 		this.type = attributes.getValue("type");

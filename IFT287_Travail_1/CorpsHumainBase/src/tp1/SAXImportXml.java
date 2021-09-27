@@ -34,7 +34,6 @@ public class SAXImportXml extends DefaultHandler {
 				listCorps.add(new Corps(attributes));
 				break;
 			case "Systems":
-				//rien
 				break;
 			case "System":
 				listCorps.get(listCorps.size() - 1).addSystem(attributes);
@@ -42,9 +41,7 @@ public class SAXImportXml extends DefaultHandler {
 			case "Flow":
 				listCorps.get(listCorps.size() - 1).getLastSystem().addFlow(attributes);
 				break;
-			//case "Connectible" :
-			case "Connections":
-				//rien
+			case "Connections": //aucune modification à faire
 				break;
 			case "Connection":
 				listCorps.get(listCorps.size() - 1).getLastSystem().last().addConnection(attributes);
@@ -52,8 +49,7 @@ public class SAXImportXml extends DefaultHandler {
 			case "to":
 				listCorps.get(listCorps.size() - 1).getLastSystem().last().getConnection().addLink(attributes);
 				break;
-			case "Organs":
-				//rien
+			case "Organs": //aucune modification à faire
 				break;
 			case "Organ":
 				listCorps.get(listCorps.size() - 1).addOrgan(attributes);
@@ -62,32 +58,7 @@ public class SAXImportXml extends DefaultHandler {
 				listCorps.get(listCorps.size() - 1).getLastSystem().last().addConnectible(attributes, qName);
 				break;
 		}
-
-		/*if(qName=="MainBody"){
-			corps.add(new Corps(attributes));
-		}
-		else if (qName=="System"){
-			corps.get(corps.size() - 1).addSystem(attributes);
-		}
-		else if(qName=="Flow"){
-			corps.get(corps.size() - 1).getLastSystem().addFlow(attributes);
-		}
-		else if(qName=="Connection"){
-			corps.get(corps.size() - 1).getLastSystem().last().addConnection(attributes);
-		}
-		else if(qName=="to"){
-			corps.get(corps.size() - 1).getLastSystem().last().getConnection().addLink(attributes);
-		}
-		else if(qName=="Organ"){
-			corps.get(corps.size() - 1).getLastSystem().last().getConnection().addLink(attributes);
-		}
-		else if(qName=="to"){
-			corps.get(corps.size() - 1).getLastSystem().last().getConnection().addLink(attributes);
-		}
-*/
 	}
-
-
 
 	public void endElement(String uri, String localName, String qName) {
 
