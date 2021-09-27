@@ -17,7 +17,7 @@ public class Link extends Identifiable implements Convertable {
 		super(link);
 	}
 
-
+	//Convertion en json selon la diapositive 37 du ppw Représentation des données Framework
 	@Override
 	public void convertJson(JsonGenerator jsonGenerator) {
 
@@ -28,6 +28,7 @@ public class Link extends Identifiable implements Convertable {
 
 	@Override
 	public void convertXML(Document document, Element element) {
+		//Code provient de https://examples.javacodegeeks.com/core-java/xml/parsers/documentbuilderfactory/create-xml-file-in-java-using-dom-parser-example/
 		Element root = document.createElement("To");
 		root.setAttribute("id", id);
 

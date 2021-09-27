@@ -11,12 +11,12 @@ public abstract class Identifiable {
 	protected String id;
 	protected String name;
 
+	//Constructeur Identifiable qui s'assure que toutes les enfants ont les mêmes attributs qu'identiafiable
 	protected Identifiable(Attributes attributes) {
 
 		type=attributes.getValue("type");
 		name = attributes.getValue("name");
 		id = attributes.getValue("id");
-
 
 		if(name==null){
 			 name="";
@@ -26,9 +26,8 @@ public abstract class Identifiable {
 		}
 
 	}
-
+	//Constructeur jsonObject Identifiable qui s'assure que toutes les enfants ont les mêmes attributs qu'identiafiable
 	protected Identifiable(JsonObject object) {
-
 
 		if (object.containsKey("name"))
 			name = object.getString("name");
@@ -40,5 +39,4 @@ public abstract class Identifiable {
 		if (id == null)
 			id = "";
 	}
-
 }

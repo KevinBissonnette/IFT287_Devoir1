@@ -13,18 +13,10 @@ public class Organ extends Identifiable implements Convertable {
 	//Constructeur Organ pour l'attribution des attributs basé sur les diapositives 41 du ppw Représentation des données Framework
 	public Organ(Attributes attributes) {
 		super(attributes);
-		for (var i = 0; i < attributes.getLength(); i++) {
-			var att = attributes.getQName(i);
-			var value = attributes.getValue(i);
-			if (att.equalsIgnoreCase("name"))
-				name = value;
+	 	this.id=attributes.getValue("id");
+		this.name=attributes.getValue("name");
+		this.systemID=attributes.getValue("systemID");
 
-			else if (att.equalsIgnoreCase("id"))
-				id = value;
-
-			else if (att.equalsIgnoreCase("systemID"))
-				systemID = value;
-		}
 	}
 	//Constructeur Organ pour le jsonObject basé sur les diapositives 41 du ppw Représentation des données Framework
 	public Organ(JsonObject organ) {

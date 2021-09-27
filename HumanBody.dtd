@@ -9,7 +9,7 @@
         <!ATTLIST System
                 id CDATA #REQUIRED
                 name CDATA #REQUIRED 
-                type CDATA #REQUIRED>  <!-- pt a changer name pour les 7 types de systemes ?|!? -->
+                type CDATA #REQUIRED>  
         <!ELEMENT Flow (Connectible|Connections)*>
         <!ATTLIST Flow
                 id CDATA #REQUIRED
@@ -38,7 +38,7 @@
                 length CDATA #REQUIRED
                 name CDATA #REQUIRED
                 startRadius CDATA #REQUIRED
-                endRadius CDATA #IMPLIED> <!-- Pas oblige partout -->
+                endRadius CDATA #IMPLIED> <!-- Pas oblige partout alors implied -->
         <!ELEMENT Vein (#PCDATA)>
         <!ATTLIST Vein
                 endRadius CDATA #IMPLIED

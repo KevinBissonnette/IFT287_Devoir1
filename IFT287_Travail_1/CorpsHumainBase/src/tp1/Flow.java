@@ -12,13 +12,15 @@ public class Flow extends Identifiable implements Convertable {
 	private List<Connectible> connectibles;
 	private List<Connection> connections ;
 
+	//Constructeur qui initialise nos variables
 	public Flow(Attributes attributes) {
-		// this.con=attributes.getValue("con");
+
 		super(attributes);
 		connectibles = new ArrayList<>();
 		connections = new ArrayList<>();
 	}
 
+	//Constructeur avec jsonObject qui initialise nos variables
 	public Flow(JsonObject flows) {
 
 		super(flows);
@@ -49,9 +51,11 @@ public class Flow extends Identifiable implements Convertable {
 	@Override
 	public void convertJson(JsonGenerator jsonGenerator) {
 
+		//Convertion en json selon la diapositive 37 du ppw Représentation des données Framework
 		jsonGenerator.writeStartObject()
-				.write("id", id)
-				.write("name", name);
+				.write("name", name)
+				.write("id", id);
+
 
 		jsonGenerator.writeStartArray("Connectible");
 		for (Convertable c : connectibles)
@@ -69,11 +73,11 @@ public class Flow extends Identifiable implements Convertable {
 	//Override la fonction de convertable pour la convertion en xml
 	@Override
 	public void convertXML(Document document, Element element) {
-
+	//Code provient de https://examples.javacodegeeks.com/core-java/xml/parsers/documentbuilderfactory/create-xml-file-in-java-using-dom-parser-example/
 		Element root = document.createElement("Flow");
 
-		root.setAttribute("id", id);
 		root.setAttribute("name", name);
+		root.setAttribute("id", id);
 
 		Element e_connectible = document.createElement("Connectibles");
 		for (Convertable c : connectibles)

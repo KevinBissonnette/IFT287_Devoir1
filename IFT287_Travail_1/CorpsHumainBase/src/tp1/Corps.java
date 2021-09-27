@@ -17,7 +17,7 @@ public class Corps {
 
 	//Constructeur du corps qui attributs les qName au attributs du corps
 	public Corps(Attributes attributes) {
-		//On doit initialisé sinon lorsqu'on fait l'appel dans devoir1 on a NullPointerException
+		//On doit initialisé sinon lorsqu'on fait l'appel dans devoir1 sinon on a NullPointerException
 		humanSystems= new ArrayList<>();
 		organs= new ArrayList<>();
 
@@ -52,6 +52,7 @@ public class Corps {
 		return humanSystems.get(humanSystems.size() - 1);
 	}
 
+	//Convertion en json selon la diapositive 37 du ppw Représentation des données Framework
 	public void convertJson(JsonGenerator jsonGenerator) {
 		jsonGenerator.writeStartObject();
 		jsonGenerator.writeStartObject("MainBody")
@@ -74,7 +75,7 @@ public class Corps {
 	}
 
 	public void convertXML(Document document) {
-
+		//Code provient de https://examples.javacodegeeks.com/core-java/xml/parsers/documentbuilderfactory/create-xml-file-in-java-using-dom-parser-example/
 		Element mainBody = document.createElement("MainBody");
 		mainBody.setAttribute("bodyName", bodyName);
 		mainBody.setAttribute("bodyID", bodyID);

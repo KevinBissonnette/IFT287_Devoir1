@@ -13,7 +13,7 @@ public class Connectible extends Identifiable implements Convertable {
 	private String length;
 	private String startRadius;
 	private String endRadius;
-
+	//Constructeur Connectible, on attributs les attributs aux types
 	public Connectible(Attributes attributes, String type) {
 		super(attributes);
 		this.type = type;
@@ -22,7 +22,7 @@ public class Connectible extends Identifiable implements Convertable {
 		this.startRadius = attributes.getValue("startRadius");
 		this.endRadius = attributes.getValue("endRadius");
 	}
-
+	//Constructeur connectible avec le jsonObject, on doit réattribué les attributs
 	public Connectible(JsonObject connectible) {
 
 		super(connectible);
@@ -71,6 +71,7 @@ public class Connectible extends Identifiable implements Convertable {
 	@Override
 	public void convertXML(Document document, Element element) {
 
+		//code inspiré des notes de cours Représentation des données Framework diapo 29
 		Element root = document.createElement(type);
 
 		root.setAttribute("name", name);

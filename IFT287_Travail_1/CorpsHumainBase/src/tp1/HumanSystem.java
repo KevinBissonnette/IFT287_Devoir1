@@ -61,7 +61,7 @@ public class HumanSystem extends Identifiable implements Convertable {
 	//Override la fonction de convertable pour la convertir en xml
 	@Override
 	public void convertXML(Document document, Element element) {
-
+		//code inspiré des notes de cours Représentation des données Framework diapo 29
 		Element root = document.createElement("System");
 
 		root.setAttribute("name", name);
